@@ -1,3 +1,29 @@
 <h2>
     Hello, {{name}}
 </h2>
+
+{{!-- <form action="/login" method="POST">
+    <input name="username"/>
+    <br/>
+    <input name="password"/>
+    <br/>
+    <input type="submit"/>
+</form> --}}
+
+<div class="wrapper">
+    <form action="/login" method="POST">
+    <br/>
+    <textarea name="tasktext" rows="3"></textarea>
+    <br/>
+    <p><b>Приоритет</b></p>
+    <p>
+        <input name="priority" type="radio" value="1"> 1
+        <input name="priority" type="radio" value="2" checked> 2
+        <input name="priority" type="radio" value="3" > 3
+    </p>
+    <br/>
+    <input type="submit" value="Добавить"/> 
+</form>
+</div>
+
+
