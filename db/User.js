@@ -18,7 +18,11 @@ var userSchema = mongoose.Schema({
   created: {
     type: Date,
     default: Date.now
-  }
+  },
+  rr: {
+    type: Boolean,
+    default: false
+  },
 });
 userSchema.methods.encryptPassword = function(password){
   return crypto.createHmac('sha1', this.salt).update(password).digest('hex');

@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var mongoose = require('./db/mongoose');
 var path = require('path');
+// var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var logger = require('morgan');
@@ -30,10 +31,10 @@ app.use(session({
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
-app.use(function(req, res, next){
-  req.session.numberOfVisits = req.session.numberOfVisits +1 || 1;
-  res.send("Visits: " + req.session.numberOfVisits);
-});
+// app.use(function(req, res, next){
+//   req.session.numberOfVisits = req.session.numberOfVisits +1 || 1;
+//   res.send("Visits: " + req.session.numberOfVisits);
+// });
 
 app.use(express.static(path.join(__dirname, 'public')));
 

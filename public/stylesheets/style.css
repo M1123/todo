@@ -1,4 +1,6 @@
 body {
+  margin: 10%;
+  width: 80%;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
