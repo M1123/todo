@@ -1,0 +1,22 @@
+extends layout
+block content
+	if user
+		h1= user.name
+		p you are logged)
+		hr
+		a(href='/users/logout') Exit if you wish
+	else
+		h2 Регистрация
+		form(method='post', action='/register')
+			input(type='text', name='regusername', placeholder='Логин')
+			br
+			input(type='password', name='regpassword', placeholder='Пароль')
+			br
+			input(type='submit')
+		h2 Вход
+		form(method='post', action='/login')
+			input(type='text', name='username', placeholder='Логин')
+			br
+			input(type='password', name='password', placeholder='Пароль')
+			br
+			input(type='submit')

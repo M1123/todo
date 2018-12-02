@@ -9,8 +9,7 @@ router.get('/', (req, res, next) => {
     if(err) return next(err);
     res.json(users);
 }); 
-// data = data.username;
-// res.render('users');
+// res.render('users', {title:'Welcome,', data:data});
 });
 
 router.get('/:id', function(req, res, next) {
@@ -23,7 +22,7 @@ router.get('/:id', function(req, res, next) {
   User.findById(id, function(err,user){
     if(err) return next(err);
     if(!user){next(err)}
-    res.render('user', req.session.username);
+    res.render('user', {username:req.session.username});
 }); 
 });
 
