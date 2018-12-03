@@ -1,15 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var ObjectID = require('mongodb').ObjectID;
-var bodyParser = require('body-parser');
-
 var User = require('../db/User').User;
 router.get('/', (req, res, next) => {
-  User.find({}, function(err,users){
+  var data;
+  data = User.find({}, function(err,users){
     if(err) return next(err);
-    res.json(users);
 }); 
-// res.render('users', {title:'Welcome,', data:data});
+console.log(data);
+res.render('users', {data:data});
 });
 
 router.get('/:id', function(req, res, next) {

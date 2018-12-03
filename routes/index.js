@@ -1,7 +1,8 @@
 var express = require('express');
+// var crypto = require('crypto');
 var User = require('../db/User').User;
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 
 passport.serializeUser(function(user, done) {
@@ -16,7 +17,7 @@ passport.deserializeUser(function(id, done) {
 });
   
 
-  passport.use(new LocalStrategy({
+passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password'
 }, function(username, password,done){
@@ -25,7 +26,7 @@ passport.deserializeUser(function(id, done) {
       ? done(err)
       : user
         ? password === user.password
-          ? done(null, user)
+          ? done(null, user) 
           : done(null, false, { message: 'Incorrect password.' })
         : done(null, false, { message: 'Incorrect username.' });
   });
@@ -35,40 +36,34 @@ passport.deserializeUser(function(id, done) {
 var router = express.Router();
 
 router.get('/', (req, res, next) => {
-  res.render('index', {username: req.session.user})
+  res.render('index')
+});
+router.get('/test', (req, res, next) => {
+  res.json(req.session);
 });
 router.get('/user', function(req, res, next) {
   if (req.session.passport.user === undefined){
-    res.redirect('/login');
+    res.redirect('/');
   }else{
-    res.render('user', {title:'Welcome,', user: req.user})
+    res.render('user', {id:req.session.passport.user});
+    console.log('u r loged in')
   }
-  res.render('user', {title:'Welcome,', user: req.user});
 });
 
 router.get('/private', function (req, res, next){
-  req.isAuthenticated()
-    ? next()
-    : res.redirect('/');
+  if(req.isAuthenticated()){
+    res.redirect('/user');
+    console.log('loged in');
+  }else{res.redirect('/'); 
+  console.log('not loged in');} 
 });
 
-router.post('/login', function(req, res, next) {
-  passport.authenticate('local',
-      function(err, user, info) {
-        console.log('login ', req.username);
-        return err
-        ? next(err)
-        : user
-          ? req.logIn(user, function(err) {
-              return err
-                ? next(err)
-                : res.redirect('/user');
-            })
-          : res.redirect('/');
-          
-    }
-  )(req, res, next);
-});
+router.post('/login', 
+    passport.authenticate('local',{
+      successRedirect:'/user',
+      failureRedirect:'/',
+      session: true
+    }));
 
 router.get('/logout', function(req, res) {
   req.logout();
@@ -77,8 +72,12 @@ router.get('/logout', function(req, res) {
 
 router.post('/register', function(req, res, next) {
   var user = new User({ username: req.body.regusername, password: req.body.regpassword});
+    // if (user.password){
+    //       user.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
+    //       user.password = crypto.pbkdf2Sync(user.password, user.salt, 10000, 64).toString('base64');
+    //     };
   user.save(function(err) {
-    console.log('register ', req.regusername)
+    console.log('register - ', req.body.regusername)
     return err
       ? next(err)
       : req.logIn(user, function(err) {
