@@ -1,20 +1,23 @@
 extends layout
 block content
-	+accordion("sample")
-		+accordion-item-primary("Регистрация","sample","true")
-			form(method='post', action='/register')
-				input(type='text', name='regusername', placeholder='Логин')
-				br
-				input(type='password', name='regpassword', placeholder='Пароль')
-				br
-				input(type='submit')
-		+accordion-item-default("Вход","sample")
-			form(method='post', action='/login')
-				input(type='text', name='username', placeholder='Логин')
-				br
-				input(type='password', name='password', placeholder='Пароль')
-				br
-				input(type='submit')
+	.container
+		.row
+			.col	
+				h2 Регистрация		
+				form(method='post', action='/register')
+					input(type='text', name='regusername', placeholder='Логин')
+					br
+					input(type='password', name='regpassword', placeholder='Пароль')
+					br
+					input(type='submit')
+			.col
+				h2 Вход
+				form(method='post', action='/login')
+					input(type='text', name='username', placeholder='Логин')
+					br
+					input(type='password', name='password', placeholder='Пароль')
+					br
+					input(type='submit')
 
 
 

@@ -42,11 +42,15 @@ router.get('/test', (req, res, next) => {
   res.json(req.session);
 });
 router.get('/user', function(req, res, next) {
-  if (req.session.passport.user === undefined){
+  var id=req.session.passport.user;
+  if (id === undefined){
     res.redirect('/');
   }else{
-    res.render('user', {id:req.session.passport.user});
-    console.log('u r loged in')
+    User.findById(id, function (err, user) { 
+      username=User.username
+     } )
+    res.render('user', {username:username});
+    console.log('u r loged in',username)
   }
 });
 
@@ -62,6 +66,7 @@ router.post('/login',
     passport.authenticate('local',{
       successRedirect:'/user',
       failureRedirect:'/',
+      failureMessage: true,
       session: true
     }));
 
