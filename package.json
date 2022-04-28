@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/M1123/todo#readme",
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^2.6.4",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",
     "connect-mongo": "^2.0.2",
